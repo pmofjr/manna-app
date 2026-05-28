@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manna — Seu Devocional Personalizado</title>
+<title>Manna 窶 Seu Devocional Personalizado</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -31,11 +31,11 @@
     overflow-x: hidden;
   }
 
-  /* ── SCREENS ── */
+  /* 笏笏 SCREENS 笏笏 */
   .screen { display: none; min-height: 100vh; }
   .screen.active { display: flex; flex-direction: column; }
 
-  /* ── AUTH SCREEN ── */
+  /* 笏笏 AUTH SCREEN 笏笏 */
   #screen-auth {
     align-items: center; justify-content: center;
     background: radial-gradient(ellipse at 60% 0%, rgba(201,168,76,0.12) 0%, transparent 60%),
@@ -106,7 +106,7 @@
   .auth-note { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 16px; }
   .auth-note a { color: var(--gold); text-decoration: none; }
 
-  /* ── NAV ── */
+  /* 笏笏 NAV 笏笏 */
   .app-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
@@ -128,7 +128,7 @@
   }
   .nav-icon-btn:hover { color: var(--gold); }
 
-  /* ── HOME SCREEN ── */
+  /* 笏笏 HOME SCREEN 笏笏 */
   #screen-home {
     background: radial-gradient(ellipse at 70% 0%, rgba(201,168,76,0.1) 0%, transparent 55%),
                 var(--blue-dark);
@@ -167,7 +167,7 @@
   .trilha-label { font-family: var(--serif); font-size: 1.1rem; color: var(--white); }
   .trilha-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
 
-  /* ── BLESS NAME SCREEN ── */
+  /* 笏笏 BLESS NAME SCREEN 笏笏 */
   #screen-bless-name {
     background: var(--blue-dark);
     padding-top: 80px; align-items: center;
@@ -203,7 +203,7 @@
   .btn-next:hover { background: var(--blue-mid); transform: translateY(-1px); }
   .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-  /* ── EMOTION SCREEN ── */
+  /* 笏笏 EMOTION SCREEN 笏笏 */
   #screen-emotion {
     background: var(--blue-dark); padding-top: 80px; align-items: center;
   }
@@ -221,7 +221,7 @@
   .emotion-icon { font-size: 1.8rem; }
   .emotion-label { font-family: var(--serif); font-size: 1rem; color: var(--white); }
 
-  /* ── CAUSE SCREEN ── */
+  /* 笏笏 CAUSE SCREEN 笏笏 */
   #screen-cause {
     background: var(--blue-dark); padding-top: 80px; align-items: center;
   }
@@ -237,7 +237,7 @@
   .cause-icon { font-size: 1.4rem; flex-shrink: 0; }
   .cause-label { font-family: var(--serif); font-size: 1rem; color: var(--white); }
 
-  /* ── LOADING SCREEN ── */
+  /* 笏笏 LOADING SCREEN 笏笏 */
   #screen-loading {
     background: radial-gradient(ellipse at 50% 30%, rgba(201,168,76,0.1) 0%, transparent 60%), var(--blue-dark);
     align-items: center; justify-content: center; padding: 40px 24px;
@@ -274,7 +274,7 @@
   .loading-dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes dotpulse { 0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
 
-  /* ── DEVOTIONAL SCREEN ── */
+  /* 笏笏 DEVOTIONAL SCREEN 笏笏 */
   #screen-devotional {
     background: var(--blue-dark); padding-top: 80px; align-items: center;
   }
@@ -337,7 +337,7 @@
   .devo-action-btn.whatsapp { background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.3); color: #25D366; }
   .devo-action-btn.whatsapp:hover { background: rgba(37,211,102,0.2); }
 
-  /* ── HISTORY SCREEN ── */
+  /* 笏笏 HISTORY SCREEN 笏笏 */
   #screen-history {
     background: var(--blue-dark); padding-top: 80px; align-items: center;
   }
@@ -358,7 +358,7 @@
   .history-item-emotion { font-family: var(--serif); font-size: 1rem; color: var(--white); margin-top: 2px; }
   .history-item-arrow { color: var(--text-muted); font-size: 0.8rem; }
 
-  /* ── TOASTS ── */
+  /* 笏笏 TOASTS 笏笏 */
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
     background: var(--blue-mid); border: 1px solid var(--gold-border);
@@ -368,7 +368,7 @@
   }
   .toast.show { opacity: 1; }
 
-  /* ── ERROR ── */
+  /* 笏笏 ERROR 笏笏 */
   .error-msg {
     background: rgba(220,50,50,0.1); border: 1px solid rgba(220,50,50,0.3);
     color: #ff8080; font-size: 0.82rem; padding: 10px 14px;
@@ -376,7 +376,7 @@
   }
   .error-msg.show { display: block; }
 
-  /* ── RESPONSIVE ── */
+  /* 笏笏 RESPONSIVE 笏笏 */
   @media (max-width: 480px) {
     .auth-box { padding: 32px 24px; }
     .devo-content { padding: 28px 22px; }
@@ -386,9 +386,9 @@
 </head>
 <body>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  SCREEN: AUTH                      -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <div id="screen-auth" class="screen active">
   <div class="auth-box">
     <div class="auth-logo">
@@ -429,13 +429,13 @@
       </div>
     </div>
 
-    <p class="auth-note">Ao continuar, você concorda com os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></p>
+    <p class="auth-note">Ao continuar, vocﾃｪ concorda com os <a href="#">Termos de Uso</a> e <a href="#">Polﾃｭtica de Privacidade</a></p>
   </div>
 </div>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  NAV (shared)                      -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <nav class="app-nav" id="app-nav" style="display:none">
   <div class="app-nav-logo">
     <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
@@ -451,31 +451,31 @@
     Mann<span>a</span>
   </div>
   <div class="nav-actions">
-    <button class="nav-icon-btn" onclick="showScreen('history')">📋 Histórico</button>
+    <button class="nav-icon-btn" onclick="showScreen('history')">搭 Histﾃｳrico</button>
     <button class="nav-icon-btn" onclick="handleLogout()">Sair</button>
   </div>
 </nav>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  SCREEN: HOME                      -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <div id="screen-home" class="screen">
   <div class="home-inner">
-    <p class="home-greeting" id="home-greeting">Bom dia ☀️</p>
-    <h1 class="home-title">Olá, <em id="home-name">amigo</em>.<br>Descubra agora a palavra certa<br>para o que você está vivendo hoje.</h1>
-    <p class="home-question">Para quem você deseja a palavra neste momento?</p>
+    <p class="home-greeting" id="home-greeting">Bom dia 笘�</p>
+    <h1 class="home-title">Olﾃ｡, <em id="home-name">amigo</em>.<br>Descubra agora a palavra certa<br>para o que vocﾃｪ estﾃ｡ vivendo hoje.</h1>
+    <p class="home-question">Para quem vocﾃｪ deseja a palavra neste momento?</p>
     <div class="trilha-btns">
       <button class="trilha-btn" onclick="selectTrilha('eu')">
-        <span class="trilha-icon">🙏</span>
+        <span class="trilha-icon">剌</span>
         <div>
           <div class="trilha-label">Para mim</div>
           <div class="trilha-sub">Receba um devocional para o seu momento</div>
         </div>
       </button>
       <button class="trilha-btn" onclick="selectTrilha('outro')">
-        <span class="trilha-icon">💛</span>
+        <span class="trilha-icon">兆</span>
         <div>
-          <div class="trilha-label">Para alguém que desejo abençoar</div>
+          <div class="trilha-label">Para alguﾃｩm que desejo abenﾃｧoar</div>
           <div class="trilha-sub">Gere um devocional personalizado para enviar</div>
         </div>
       </button>
@@ -483,62 +483,62 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  SCREEN: BLESS NAME                -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <div id="screen-bless-name" class="screen">
   <div class="step-inner">
-    <button class="step-back" onclick="showScreen('home')">← Voltar</button>
-    <h2 class="step-title">Ok. Qual o nome de quem<br>será <em>abençoado</em>?</h2>
+    <button class="step-back" onclick="showScreen('home')">竊 Voltar</button>
+    <h2 class="step-title">Ok. Qual o nome de quem<br>serﾃ｡ <em>abenﾃｧoado</em>?</h2>
     <input class="step-input" type="text" id="bless-name-input" placeholder="Nome da pessoa..." oninput="checkBlessName()">
-    <button class="btn-next" id="btn-bless-next" disabled onclick="goToEmotionBless()">Continuar →</button>
+    <button class="btn-next" id="btn-bless-next" disabled onclick="goToEmotionBless()">Continuar 竊</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  SCREEN: EMOTION                   -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <div id="screen-emotion" class="screen">
   <div class="step-inner">
-    <button class="step-back" id="emotion-back" onclick="goBackFromEmotion()">← Voltar</button>
-    <h2 class="step-title" id="emotion-title">Ok. Como você está<br>se sentindo <em>hoje</em>?</h2>
-    <p class="step-sub">Não existe resposta certa. Apenas seja sincero.</p>
+    <button class="step-back" id="emotion-back" onclick="goBackFromEmotion()">竊 Voltar</button>
+    <h2 class="step-title" id="emotion-title">Ok. Como vocﾃｪ estﾃ｡<br>se sentindo <em>hoje</em>?</h2>
+    <p class="step-sub">Nﾃ｣o existe resposta certa. Apenas seja sincero.</p>
     <div class="emotion-grid">
-      <button class="emotion-btn" onclick="selectEmotion('Triste', '😔', true)"><span class="emotion-icon">😔</span><span class="emotion-label">Triste</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Ansioso(a)', '😰', true)"><span class="emotion-icon">😰</span><span class="emotion-label">Ansioso(a)</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Desanimado(a)', '😞', true)"><span class="emotion-icon">😞</span><span class="emotion-label">Desanimado(a)</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Confuso(a)', '😵', true)"><span class="emotion-icon">😵</span><span class="emotion-label">Confuso(a)</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Com medo', '😨', true)"><span class="emotion-icon">😨</span><span class="emotion-label">Com medo</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Sobrecarregado(a)', '😩', true)"><span class="emotion-icon">😩</span><span class="emotion-label">Sobrecarregado(a)</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Feliz', '😊', false)"><span class="emotion-icon">😊</span><span class="emotion-label">Feliz</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Grato(a)', '🙏', false)"><span class="emotion-icon">🙏</span><span class="emotion-label">Grato(a)</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Em paz', '😌', false)"><span class="emotion-icon">😌</span><span class="emotion-label">Em paz</span></button>
-      <button class="emotion-btn" onclick="selectEmotion('Neutro(a)', '😐', false)"><span class="emotion-icon">😐</span><span class="emotion-label">Neutro(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Triste', '�', true)"><span class="emotion-icon">�</span><span class="emotion-label">Triste</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Ansioso(a)', '于', true)"><span class="emotion-icon">于</span><span class="emotion-label">Ansioso(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Desanimado(a)', '�', true)"><span class="emotion-icon">�</span><span class="emotion-label">Desanimado(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Confuso(a)', '亰', true)"><span class="emotion-icon">亰</span><span class="emotion-label">Confuso(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Com medo', '乖', true)"><span class="emotion-icon">乖</span><span class="emotion-label">Com medo</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Sobrecarregado(a)', '乘', true)"><span class="emotion-icon">乘</span><span class="emotion-label">Sobrecarregado(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Feliz', '�', false)"><span class="emotion-icon">�</span><span class="emotion-label">Feliz</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Grato(a)', '剌', false)"><span class="emotion-icon">剌</span><span class="emotion-label">Grato(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Em paz', '�', false)"><span class="emotion-icon">�</span><span class="emotion-label">Em paz</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Neutro(a)', '�', false)"><span class="emotion-icon">�</span><span class="emotion-label">Neutro(a)</span></button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  SCREEN: CAUSE                     -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <div id="screen-cause" class="screen">
   <div class="step-inner">
-    <button class="step-back" onclick="showScreen('emotion')">← Voltar</button>
-    <h2 class="step-title" id="cause-title">O que vem deixando<br>você <em>assim</em>?</h2>
+    <button class="step-back" onclick="showScreen('emotion')">竊 Voltar</button>
+    <h2 class="step-title" id="cause-title">O que vem deixando<br>vocﾃｪ <em>assim</em>?</h2>
     <div class="cause-list">
-      <button class="cause-btn" onclick="selectCause('Trabalho e Finanças')"><span class="cause-icon">💼</span><span class="cause-label">Trabalho / Finanças</span></button>
-      <button class="cause-btn" onclick="selectCause('Família')"><span class="cause-icon">👨‍👩‍👧</span><span class="cause-label">Família</span></button>
-      <button class="cause-btn" onclick="selectCause('Saúde')"><span class="cause-icon">❤️</span><span class="cause-label">Saúde</span></button>
-      <button class="cause-btn" onclick="selectCause('Uma decisão importante')"><span class="cause-icon">🤔</span><span class="cause-label">Decisão importante</span></button>
-      <button class="cause-btn" onclick="selectCause('O futuro')"><span class="cause-icon">🌅</span><span class="cause-label">Futuro</span></button>
-      <button class="cause-btn" onclick="selectCause('Algo que não consigo explicar')"><span class="cause-icon">💭</span><span class="cause-label">Algo que não consigo explicar</span></button>
+      <button class="cause-btn" onclick="selectCause('Trabalho e Finanﾃｧas')"><span class="cause-icon">直</span><span class="cause-label">Trabalho / Finanﾃｧas</span></button>
+      <button class="cause-btn" onclick="selectCause('Famﾃｭlia')"><span class="cause-icon">捉窶昨汨ｩ窶昨汨ｧ</span><span class="cause-label">Famﾃｭlia</span></button>
+      <button class="cause-btn" onclick="selectCause('Saﾃｺde')"><span class="cause-icon">笶､�</span><span class="cause-label">Saﾃｺde</span></button>
+      <button class="cause-btn" onclick="selectCause('Uma decisﾃ｣o importante')"><span class="cause-icon">､</span><span class="cause-label">Decisﾃ｣o importante</span></button>
+      <button class="cause-btn" onclick="selectCause('O futuro')"><span class="cause-icon">桁</span><span class="cause-label">Futuro</span></button>
+      <button class="cause-btn" onclick="selectCause('Algo que nﾃ｣o consigo explicar')"><span class="cause-icon">眺</span><span class="cause-label">Algo que nﾃ｣o consigo explicar</span></button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  SCREEN: LOADING                   -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <div id="screen-loading" class="screen">
   <div class="loading-inner">
     <svg class="loading-wheat" viewBox="0 0 40 40" fill="none">
@@ -551,7 +551,7 @@
       <path d="M20 28 Q13 24 11 17" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
       <path d="M20 28 Q27 24 29 17" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
     </svg>
-    <p class="loading-title" id="loading-title">Estamos preparando uma palavra personalizada para o seu momento…</p>
+    <p class="loading-title" id="loading-title">Estamos preparando uma palavra personalizada para o seu momento窶ｦ</p>
     <p class="loading-sub">Isso pode levar alguns segundos</p>
     <div class="loading-bar"><div class="loading-bar-fill"></div></div>
     <div class="loading-dots">
@@ -562,9 +562,9 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  SCREEN: DEVOTIONAL                -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <div id="screen-devotional" class="screen">
   <div class="devo-inner">
     <div class="devo-meta">
@@ -575,21 +575,21 @@
       <!-- devotional content injected here -->
     </div>
     <div class="devo-actions" id="devo-actions">
-      <button class="devo-action-btn" onclick="generatePDF()">📄 Baixar PDF</button>
-      <button class="devo-action-btn whatsapp" id="btn-whatsapp" style="display:none" onclick="shareWhatsApp()">💚 Enviar pelo WhatsApp</button>
-      <button class="devo-action-btn" onclick="showScreen('home')">🏠 Nova palavra</button>
+      <button class="devo-action-btn" onclick="generatePDF()">塘 Baixar PDF</button>
+      <button class="devo-action-btn whatsapp" id="btn-whatsapp" style="display:none" onclick="shareWhatsApp()">丁 Enviar pelo WhatsApp</button>
+      <button class="devo-action-btn" onclick="showScreen('home')">匠 Nova palavra</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <!--  SCREEN: HISTORY                   -->
-<!-- ══════════════════════════════════ -->
+<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
 <div id="screen-history" class="screen">
   <div class="history-inner">
-    <button class="step-back" onclick="showScreen('home')" style="margin-bottom:16px">← Voltar</button>
-    <h2 class="history-title">Meu Histórico</h2>
-    <p class="history-sub">Suas palavras anteriores, sempre disponíveis.</p>
+    <button class="step-back" onclick="showScreen('home')" style="margin-bottom:16px">竊 Voltar</button>
+    <h2 class="history-title">Meu Histﾃｳrico</h2>
+    <p class="history-sub">Suas palavras anteriores, sempre disponﾃｭveis.</p>
     <div class="history-list" id="history-list">
       <!-- injected by JS -->
     </div>
@@ -600,9 +600,9 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // STATE
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 const state = {
   user: null,        // { name, email }
   trilha: null,      // 'eu' | 'outro'
@@ -614,9 +614,9 @@ const state = {
   history: []
 };
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // UTILS
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
@@ -634,9 +634,9 @@ function showToast(msg, duration = 2500) {
 
 function getGreeting() {
   const h = new Date().getHours();
-  if (h < 12) return 'Bom dia ☀️';
-  if (h < 18) return 'Boa tarde 🌤️';
-  return 'Boa noite 🌙';
+  if (h < 12) return 'Bom dia 笘�';
+  if (h < 18) return 'Boa tarde 研�';
+  return 'Boa noite 嫌';
 }
 
 function formatDate(d = new Date()) {
@@ -652,9 +652,9 @@ function loadHistory() {
   state.history = raw ? JSON.parse(raw) : [];
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // AUTH
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function switchAuthTab(tab) {
   document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
   event.target.classList.add('active');
@@ -672,11 +672,11 @@ function handleLogin() {
     err.classList.add('show'); return;
   }
 
-  // CONECTAR SUPABASE AQUI — verificar usuário no banco
+  // CONECTAR SUPABASE AQUI 窶 verificar usuﾃ｡rio no banco
   // Por ora: simular login com localStorage
   const users = JSON.parse(localStorage.getItem('manna_users') || '{}');
   if (!users[email]) {
-    err.textContent = 'Usuário não encontrado. Crie uma conta.';
+    err.textContent = 'Usuﾃ｡rio nﾃ｣o encontrado. Crie uma conta.';
     err.classList.add('show'); return;
   }
   if (users[email].password !== password) {
@@ -703,10 +703,10 @@ function handleRegister() {
     err.classList.add('show'); return;
   }
 
-  // CONECTAR SUPABASE AQUI — criar usuário no banco
+  // CONECTAR SUPABASE AQUI 窶 criar usuﾃ｡rio no banco
   const users = JSON.parse(localStorage.getItem('manna_users') || '{}');
   if (users[email]) {
-    err.textContent = 'Este e-mail já está cadastrado.';
+    err.textContent = 'Este e-mail jﾃ｡ estﾃ｡ cadastrado.';
     err.classList.add('show'); return;
   }
 
@@ -718,7 +718,7 @@ function handleRegister() {
 
 function handleGoogleLogin() {
   // CONECTAR SUPABASE/GOOGLE AUTH AQUI
-  showToast('Login com Google será ativado em breve.');
+  showToast('Login com Google serﾃ｡ ativado em breve.');
 }
 
 function loginUser(user) {
@@ -734,9 +734,9 @@ function handleLogout() {
   showScreen('auth');
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // HOME
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function goToHome() {
   document.getElementById('home-greeting').textContent = getGreeting();
   document.getElementById('home-name').textContent = state.user.name.split(' ')[0];
@@ -753,14 +753,14 @@ function selectTrilha(trilha) {
     showScreen('bless-name');
   } else {
     const title = document.getElementById('emotion-title');
-    title.innerHTML = 'Ok. Como você está<br>se sentindo <em>hoje</em>?';
+    title.innerHTML = 'Ok. Como vocﾃｪ estﾃ｡<br>se sentindo <em>hoje</em>?';
     showScreen('emotion');
   }
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // BLESS NAME
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function checkBlessName() {
   const val = document.getElementById('bless-name-input').value.trim();
   document.getElementById('btn-bless-next').disabled = val.length < 2;
@@ -771,7 +771,7 @@ function goToEmotionBless() {
   state.blessName = name;
   const firstName = name.split(' ')[0];
   const title = document.getElementById('emotion-title');
-  title.innerHTML = `Como você acredita que <em>${firstName}</em><br>esteja se sentindo neste momento?`;
+  title.innerHTML = `Como vocﾃｪ acredita que <em>${firstName}</em><br>esteja se sentindo neste momento?`;
   showScreen('emotion');
 }
 
@@ -780,9 +780,9 @@ function goBackFromEmotion() {
   else showScreen('home');
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // EMOTION
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function selectEmotion(emotion, icon, isNegative) {
   state.emotion = emotion;
   state.emotionNegative = isNegative;
@@ -794,7 +794,7 @@ function selectEmotion(emotion, icon, isNegative) {
     if (firstName) {
       title.innerHTML = `O que parece deixar<br><em>${firstName}</em> assim?`;
     } else {
-      title.innerHTML = `O que vem deixando<br>você <em>assim</em>?`;
+      title.innerHTML = `O que vem deixando<br>vocﾃｪ <em>assim</em>?`;
     }
     showScreen('cause');
   } else {
@@ -802,17 +802,17 @@ function selectEmotion(emotion, icon, isNegative) {
   }
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // CAUSE
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function selectCause(cause) {
   state.cause = cause;
   generateDevocional();
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // GENERATE DEVOTIONAL
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 async function generateDevocional() {
   const firstName = state.trilha === 'outro'
     ? state.blessName.split(' ')[0]
@@ -820,9 +820,9 @@ async function generateDevocional() {
 
   const loadingTitle = document.getElementById('loading-title');
   if (state.trilha === 'outro') {
-    loadingTitle.textContent = `Estamos preparando uma palavra personalizada para o momento vivido por ${firstName}…`;
+    loadingTitle.textContent = `Estamos preparando uma palavra personalizada para o momento vivido por ${firstName}窶ｦ`;
   } else {
-    loadingTitle.textContent = `Estamos preparando uma palavra personalizada para o seu momento…`;
+    loadingTitle.textContent = `Estamos preparando uma palavra personalizada para o seu momento窶ｦ`;
   }
 
   showScreen('loading');
@@ -851,7 +851,7 @@ async function generateDevocional() {
     renderDevocional(firstName, text);
 
   } catch (err) {
-    // FALLBACK para demonstração
+    // FALLBACK para demonstraﾃｧﾃ｣o
     renderDevocional(firstName, getDemoDevocional(firstName));
   }
 }
@@ -860,75 +860,75 @@ function buildPrompt(firstName) {
   const isNeutral = state.emotion === 'Neutro(a)';
   const isBless = state.trilha === 'outro';
 
-  let prompt = `Você é um escritor cristão especialista em devocionais, com profundo conhecimento bíblico e sensibilidade pastoral. Seu estilo é acolhedor, vulnerável, real e esperançoso — semelhante aos devocionais de maior sucesso do mercado brasileiro, como os de Deive Leonardo e Café com Deus Pai. Você escreve para o coração das pessoas, não apenas para a mente. Suas mensagens são conversas reais com Deus, sem jargão religioso vazio.
+  let prompt = `Vocﾃｪ ﾃｩ um escritor cristﾃ｣o especialista em devocionais, com profundo conhecimento bﾃｭblico e sensibilidade pastoral. Seu estilo ﾃｩ acolhedor, vulnerﾃ｡vel, real e esperanﾃｧoso 窶 semelhante aos devocionais de maior sucesso do mercado brasileiro, como os de Deive Leonardo e Cafﾃｩ com Deus Pai. Vocﾃｪ escreve para o coraﾃｧﾃ｣o das pessoas, nﾃ｣o apenas para a mente. Suas mensagens sﾃ｣o conversas reais com Deus, sem jargﾃ｣o religioso vazio.
 
 Gere um devocional personalizado para ${firstName}`;
 
   if (isNeutral) {
-    prompt += `, que está se sentindo neutro hoje. Gere um devocional motivacional, esperançoso e que provoque boas emoções — como uma surpresa positiva do dia.`;
+    prompt += `, que estﾃ｡ se sentindo neutro hoje. Gere um devocional motivacional, esperanﾃｧoso e que provoque boas emoﾃｧﾃｵes 窶 como uma surpresa positiva do dia.`;
   } else if (state.cause) {
-    prompt += `, que está se sentindo ${state.emotion} por causa de: ${state.cause}.`;
+    prompt += `, que estﾃ｡ se sentindo ${state.emotion} por causa de: ${state.cause}.`;
   } else {
-    prompt += `, que está se sentindo ${state.emotion}.`;
+    prompt += `, que estﾃ｡ se sentindo ${state.emotion}.`;
   }
 
   prompt += `
 
 O devocional deve seguir esta estrutura:
-1. Uma abertura empática e acolhedora, que faça ${firstName} sentir que foi completamente compreendido — sem julgamentos, com humanidade real
-2. Um versículo bíblico profundamente adequado ao momento (apresente o versículo em destaque, seguido da referência)
-3. Uma reflexão rica com no mínimo 4 parágrafos, conectando a palavra de Deus à realidade emocional de ${firstName} de forma profunda, prática e transformadora
-4. Uma oração final em primeira pessoa, vulnerável e sincera, como se ${firstName} estivesse conversando diretamente com Deus
+1. Uma abertura empﾃ｡tica e acolhedora, que faﾃｧa ${firstName} sentir que foi completamente compreendido 窶 sem julgamentos, com humanidade real
+2. Um versﾃｭculo bﾃｭblico profundamente adequado ao momento (apresente o versﾃｭculo em destaque, seguido da referﾃｪncia)
+3. Uma reflexﾃ｣o rica com no mﾃｭnimo 4 parﾃ｡grafos, conectando a palavra de Deus ﾃ realidade emocional de ${firstName} de forma profunda, prﾃ｡tica e transformadora
+4. Uma oraﾃｧﾃ｣o final em primeira pessoa, vulnerﾃ｡vel e sincera, como se ${firstName} estivesse conversando diretamente com Deus
 
 Regras essenciais:
-- Comece EXATAMENTE com: ${firstName}, esta é a palavra de Deus para você hoje.
-- Tom: caloroso, pastoral, íntimo, vulnerável — como Deive Leonardo escreve
-- Extensão: entre 500 e 700 palavras (rico e completo, não superficial)
-- Evite clichês religiosos vazios
+- Comece EXATAMENTE com: ${firstName}, esta ﾃｩ a palavra de Deus para vocﾃｪ hoje.
+- Tom: caloroso, pastoral, ﾃｭntimo, vulnerﾃ｡vel 窶 como Deive Leonardo escreve
+- Extensﾃ｣o: entre 500 e 700 palavras (rico e completo, nﾃ｣o superficial)
+- Evite clichﾃｪs religiosos vazios
 - O devocional deve parecer escrito especialmente para ${firstName} neste momento exato
 - Formate assim:
   ABERTURA: [texto da abertura]
-  VERSÍCULO: [texto do versículo]
-  REFERÊNCIA: [ex: João 3:16]
-  REFLEXÃO: [texto da reflexão em parágrafos]
-  ORAÇÃO: [texto da oração]`;
+  VERSﾃ垢ULO: [texto do versﾃｭculo]
+  REFERﾃ劾CIA: [ex: Joﾃ｣o 3:16]
+  REFLEXﾃグ: [texto da reflexﾃ｣o em parﾃ｡grafos]
+  ORAﾃ�グ: [texto da oraﾃｧﾃ｣o]`;
 
   return prompt;
 }
 
 function getDemoDevocional(firstName) {
-  return `${firstName}, esta é a palavra de Deus para você hoje.
+  return `${firstName}, esta ﾃｩ a palavra de Deus para vocﾃｪ hoje.
 
-ABERTURA: Carregar o peso das finanças é uma das coisas mais exaustivas que existem. Não é frescura, não é falta de fé — é real. A preocupação com dinheiro toca em algo muito profundo: a segurança, o futuro, a capacidade de cuidar de quem você ama. Se você está ansioso hoje, saiba que Deus vê esse peso. E Ele não está distante.
+ABERTURA: Carregar o peso das finanﾃｧas ﾃｩ uma das coisas mais exaustivas que existem. Nﾃ｣o ﾃｩ frescura, nﾃ｣o ﾃｩ falta de fﾃｩ 窶 ﾃｩ real. A preocupaﾃｧﾃ｣o com dinheiro toca em algo muito profundo: a seguranﾃｧa, o futuro, a capacidade de cuidar de quem vocﾃｪ ama. Se vocﾃｪ estﾃ｡ ansioso hoje, saiba que Deus vﾃｪ esse peso. E Ele nﾃ｣o estﾃ｡ distante.
 
-VERSÍCULO: Não andem ansiosos por coisa alguma, mas em tudo, pela oração e pela súplica, com ação de graças, apresentem seus pedidos a Deus. E a paz de Deus, que excede todo o entendimento, guardará os seus corações e as suas mentes em Cristo Jesus.
+VERSﾃ垢ULO: Nﾃ｣o andem ansiosos por coisa alguma, mas em tudo, pela oraﾃｧﾃ｣o e pela sﾃｺplica, com aﾃｧﾃ｣o de graﾃｧas, apresentem seus pedidos a Deus. E a paz de Deus, que excede todo o entendimento, guardarﾃ｡ os seus coraﾃｧﾃｵes e as suas mentes em Cristo Jesus.
 
-REFERÊNCIA: Filipenses 4:6-7
+REFERﾃ劾CIA: Filipenses 4:6-7
 
-REFLEXÃO: A palavra de Paulo não foi escrita de um lugar confortável. Ele estava preso quando escreveu isso. Sem dinheiro, sem liberdade, sem garantias humanas. E ainda assim ele fala em paz. Não porque os problemas sumiram — mas porque ele havia aprendido algo que a maioria de nós ainda está aprendendo: que a paz de Deus não depende da resolução das circunstâncias.
+REFLEXﾃグ: A palavra de Paulo nﾃ｣o foi escrita de um lugar confortﾃ｡vel. Ele estava preso quando escreveu isso. Sem dinheiro, sem liberdade, sem garantias humanas. E ainda assim ele fala em paz. Nﾃ｣o porque os problemas sumiram 窶 mas porque ele havia aprendido algo que a maioria de nﾃｳs ainda estﾃ｡ aprendendo: que a paz de Deus nﾃ｣o depende da resoluﾃｧﾃ｣o das circunstﾃ｢ncias.
 
-${firstName}, a ansiedade financeira muitas vezes nos faz viver no futuro — num cenário que ainda não aconteceu, resolvendo problemas que talvez nunca existam da forma que imaginamos. Deus, porém, nos chama de volta para o presente. Para o hoje. "O pão nosso de cada dia nos dai hoje" — essa oração que Jesus ensinou não é sobre o mês que vem. É sobre hoje. E hoje, você está de pé.
+${firstName}, a ansiedade financeira muitas vezes nos faz viver no futuro 窶 num cenﾃ｡rio que ainda nﾃ｣o aconteceu, resolvendo problemas que talvez nunca existam da forma que imaginamos. Deus, porﾃｩm, nos chama de volta para o presente. Para o hoje. "O pﾃ｣o nosso de cada dia nos dai hoje" 窶 essa oraﾃｧﾃ｣o que Jesus ensinou nﾃ｣o ﾃｩ sobre o mﾃｪs que vem. ﾃ sobre hoje. E hoje, vocﾃｪ estﾃ｡ de pﾃｩ.
 
-Isso não significa ignorar os problemas práticos. Significa enfrentá-los com uma âncora diferente. Quando a ansiedade gritar mais alto, leve esse grito para a oração. Transforme a preocupação em conversa com Deus. Não porque isso resolva a conta na hora, mas porque nessa conversa você se lembra de que não está sozinho nessa batalha.
+Isso nﾃ｣o significa ignorar os problemas prﾃ｡ticos. Significa enfrentﾃ｡-los com uma ﾃ｢ncora diferente. Quando a ansiedade gritar mais alto, leve esse grito para a oraﾃｧﾃ｣o. Transforme a preocupaﾃｧﾃ｣o em conversa com Deus. Nﾃ｣o porque isso resolva a conta na hora, mas porque nessa conversa vocﾃｪ se lembra de que nﾃ｣o estﾃ｡ sozinho nessa batalha.
 
-H� algo que Deus quer que você saiba hoje: Ele viu cada noite que você dormiu mal pensando nisso. Cada vez que você abriu as contas com o coração apertado. Cada silêncio constrangedor que o dinheiro criou. Ele não estava distante. Ele estava ali. E continua.
+H｡ algo que Deus quer que vocﾃｪ saiba hoje: Ele viu cada noite que vocﾃｪ dormiu mal pensando nisso. Cada vez que vocﾃｪ abriu as contas com o coraﾃｧﾃ｣o apertado. Cada silﾃｪncio constrangedor que o dinheiro criou. Ele nﾃ｣o estava distante. Ele estava ali. E continua.
 
-ORAÇÃO: Senhor, hoje meu coração está pesado por causa das finanças. Confesso que às vezes o medo fala mais alto que a fé. Mas venho a Ti, não com respostas, mas com a minha ansiedade — porque Tu disseste que eu podia fazer isso. Peço sabedoria para administrar o que tenho, coragem para agir onde preciso agir e descanso para o que está fora do meu controle. Guarda meu coração, Senhor. Que eu consiga descansar sabendo que Tu és fiel — e que nenhuma conta define quem eu sou aos Teus olhos. Em nome de Jesus, amém.`;
+ORAﾃ�グ: Senhor, hoje meu coraﾃｧﾃ｣o estﾃ｡ pesado por causa das finanﾃｧas. Confesso que ﾃs vezes o medo fala mais alto que a fﾃｩ. Mas venho a Ti, nﾃ｣o com respostas, mas com a minha ansiedade 窶 porque Tu disseste que eu podia fazer isso. Peﾃｧo sabedoria para administrar o que tenho, coragem para agir onde preciso agir e descanso para o que estﾃ｡ fora do meu controle. Guarda meu coraﾃｧﾃ｣o, Senhor. Que eu consiga descansar sabendo que Tu ﾃｩs fiel 窶 e que nenhuma conta define quem eu sou aos Teus olhos. Em nome de Jesus, amﾃｩm.`;
 }
 
 function parseDevocional(text, firstName) {
   // Try to parse structured format
   const abertura = extractSection(text, 'ABERTURA');
-  const versiculo = extractSection(text, 'VERSÍCULO') || extractSection(text, 'VERSICULO');
-  const referencia = extractSection(text, 'REFERÊNCIA') || extractSection(text, 'REFERENCIA');
-  const reflexao = extractSection(text, 'REFLEXÃO') || extractSection(text, 'REFLEXAO');
-  const oracao = extractSection(text, 'ORAÇÃO') || extractSection(text, 'ORACAO');
+  const versiculo = extractSection(text, 'VERSﾃ垢ULO') || extractSection(text, 'VERSICULO');
+  const referencia = extractSection(text, 'REFERﾃ劾CIA') || extractSection(text, 'REFERENCIA');
+  const reflexao = extractSection(text, 'REFLEXﾃグ') || extractSection(text, 'REFLEXAO');
+  const oracao = extractSection(text, 'ORAﾃ�グ') || extractSection(text, 'ORACAO');
 
   return { abertura, versiculo, referencia, reflexao, oracao };
 }
 
 function extractSection(text, label) {
-  const regex = new RegExp(label + ':\\s*([\\s\\S]*?)(?=\\n[A-ZÇÃÕ]+:|$)', 'i');
+  const regex = new RegExp(label + ':\\s*([\\s\\S]*?)(?=\\n[A-Zﾃ�ε評+:|$)', 'i');
   const match = text.match(regex);
   return match ? match[1].trim() : null;
 }
@@ -939,9 +939,9 @@ function renderDevocional(firstName, rawText) {
   const date = formatDate();
   document.getElementById('devo-date').textContent = date;
   document.getElementById('devo-emotion-tag').textContent =
-    (state.emotion || '') + (state.cause ? ' · ' + state.cause : '');
+    (state.emotion || '') + (state.cause ? ' ﾂｷ ' + state.cause : '');
 
-  let html = `<p class="devo-greeting">${firstName}, esta é a palavra de Deus para você hoje.</p>`;
+  let html = `<p class="devo-greeting">${firstName}, esta ﾃｩ a palavra de Deus para vocﾃｪ hoje.</p>`;
 
   if (parsed.abertura) {
     html += `<div class="devo-text"><p>${parsed.abertura.replace(/\n\n/g, '</p><p>')}</p></div>`;
@@ -961,7 +961,7 @@ function renderDevocional(firstName, rawText) {
 
   if (parsed.oracao) {
     html += `<div class="devo-prayer">
-      <p class="devo-prayer-label">🙏 Oração</p>
+      <p class="devo-prayer-label">剌 Oraﾃｧﾃ｣o</p>
       <p class="devo-prayer-text">${parsed.oracao}</p>
     </div>`;
   }
@@ -988,39 +988,39 @@ function renderDevocional(firstName, rawText) {
     state.currentDevo = entry;
     state.history.unshift(entry);
     saveHistory();
-    // CONECTAR SUPABASE AQUI — salvar devocional no banco
+    // CONECTAR SUPABASE AQUI 窶 salvar devocional no banco
   }
 
   showScreen('devotional');
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // HISTORY
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function renderHistory() {
   const list = document.getElementById('history-list');
   if (!state.history.length) {
-    list.innerHTML = `<p style="color:var(--text-muted);font-size:0.9rem;text-align:center;padding:40px 0">Você ainda não tem devocionais salvos.<br>Gere seu primeiro agora! 🙏</p>`;
+    list.innerHTML = `<p style="color:var(--text-muted);font-size:0.9rem;text-align:center;padding:40px 0">Vocﾃｪ ainda nﾃ｣o tem devocionais salvos.<br>Gere seu primeiro agora! 剌</p>`;
     return;
   }
   const emotionIcons = {
-    'Triste': '😔', 'Ansioso(a)': '😰', 'Desanimado(a)': '😞',
-    'Confuso(a)': '😵', 'Com medo': '😨', 'Sobrecarregado(a)': '😩',
-    'Feliz': '😊', 'Grato(a)': '🙏', 'Em paz': '😌', 'Neutro(a)': '😐'
+    'Triste': '�', 'Ansioso(a)': '于', 'Desanimado(a)': '�',
+    'Confuso(a)': '亰', 'Com medo': '乖', 'Sobrecarregado(a)': '乘',
+    'Feliz': '�', 'Grato(a)': '剌', 'Em paz': '�', 'Neutro(a)': '�'
   };
   list.innerHTML = state.history.map(entry => {
     const d = new Date(entry.date);
     const dateStr = d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-    const icon = emotionIcons[entry.emotion] || '📖';
+    const icon = emotionIcons[entry.emotion] || '当';
     return `<div class="history-item" onclick="openHistoryEntry(${entry.id})">
       <div class="history-item-left">
         <span class="history-item-icon">${icon}</span>
         <div>
           <div class="history-item-date">${dateStr}</div>
-          <div class="history-item-emotion">${entry.emotion}${entry.cause ? ' · ' + entry.cause : ''}</div>
+          <div class="history-item-emotion">${entry.emotion}${entry.cause ? ' ﾂｷ ' + entry.cause : ''}</div>
         </div>
       </div>
-      <span class="history-item-arrow">→</span>
+      <span class="history-item-arrow">竊</span>
     </div>`;
   }).join('');
 }
@@ -1036,10 +1036,10 @@ function openHistoryEntry(id) {
 
   document.getElementById('devo-date').textContent = formatDate(new Date(entry.date));
   document.getElementById('devo-emotion-tag').textContent =
-    (entry.emotion || '') + (entry.cause ? ' · ' + entry.cause : '');
+    (entry.emotion || '') + (entry.cause ? ' ﾂｷ ' + entry.cause : '');
 
   const parsed = parseDevocional(entry.content, firstName);
-  let html = `<p class="devo-greeting">${firstName}, esta é a palavra de Deus para você hoje.</p>`;
+  let html = `<p class="devo-greeting">${firstName}, esta ﾃｩ a palavra de Deus para vocﾃｪ hoje.</p>`;
   if (parsed.abertura) html += `<div class="devo-text"><p>${parsed.abertura.replace(/\n\n/g, '</p><p>')}</p></div>`;
   if (parsed.versiculo) {
     html += `<div class="devo-verse"><p class="devo-verse-text">"${parsed.versiculo}"</p>${parsed.referencia ? `<p class="devo-verse-ref">${parsed.referencia}</p>` : ''}</div>`;
@@ -1048,30 +1048,30 @@ function openHistoryEntry(id) {
     html += `<div class="devo-text">${parsed.reflexao.split(/\n\n+/).map(p => `<p>${p.trim()}</p>`).join('')}</div>`;
   }
   if (parsed.oracao) {
-    html += `<div class="devo-prayer"><p class="devo-prayer-label">🙏 Oração</p><p class="devo-prayer-text">${parsed.oracao}</p></div>`;
+    html += `<div class="devo-prayer"><p class="devo-prayer-label">剌 Oraﾃｧﾃ｣o</p><p class="devo-prayer-text">${parsed.oracao}</p></div>`;
   }
   document.getElementById('devo-content').innerHTML = html;
   document.getElementById('btn-whatsapp').style.display = 'none';
   showScreen('devotional');
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // ACTIONS
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function generatePDF() {
   // CONECTAR BIBLIOTECA PDF AQUI (ex: jsPDF)
-  showToast('📄 Gerando PDF... (integração em breve)');
+  showToast('塘 Gerando PDF... (integraﾃｧﾃ｣o em breve)');
 }
 
 function shareWhatsApp() {
   const firstName = state.blessName ? state.blessName.split(' ')[0] : '';
-  const msg = encodeURIComponent(`Olá! Preparei um devocional especialmente para você, ${firstName}. Que Deus abençoe o seu dia! 🙏\n\n[link do devocional]`);
+  const msg = encodeURIComponent(`Olﾃ｡! Preparei um devocional especialmente para vocﾃｪ, ${firstName}. Que Deus abenﾃｧoe o seu dia! 剌\n\n[link do devocional]`);
   window.open(`https://wa.me/?text=${msg}`, '_blank');
 }
 
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 // INIT
-// ══════════════════════════════════
+// 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
 function init() {
   // Check session
   const saved = localStorage.getItem('manna_current_user');
