@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manna - Seu Devocional Personalizado</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --blue: #1C3557;
+    --blue-mid: #2E5480;
+    --blue-dark: #0F1E2E;
+    --white: #FFFFFF;
+    --text: #FFFFFF;
+    --text-muted: rgba(255,255,255,0.55);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.1);
+    --gold-border: rgba(201,168,76,0.3);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--blue-dark); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* AUTH */
+  #screen-auth { align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 60% 0%, rgba(201,168,76,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 10% 90%, rgba(46,84,128,0.5) 0%, transparent 60%),
+                var(--blue-dark); padding: 40px 24px; }
+  .auth-box { width: 100%; max-width: 400px; background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); border-radius: 24px; padding: 40px 36px; box-shadow: 0 40px 80px rgba(0,0,0,0.4); }
+  .auth-logo { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 32px; }
+  .auth-logo-text { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--white); letter-spacing: 0.04em; }
+  .auth-logo-text span { color: var(--gold); }
+  .auth-tabs { display: flex; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 4px; margin-bottom: 28px; }
+  .auth-tab { flex: 1; text-align: center; padding: 10px; font-size: 0.85rem; font-weight: 500; cursor: pointer; border-radius: 10px; color: var(--text-muted); transition: all 0.2s; border: none; background: none; }
+  .auth-tab.active { background: var(--gold); color: var(--white); }
+  .auth-form { display: flex; flex-direction: column; gap: 14px; }
+  .auth-form input { background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px 16px; color: var(--white); font-family: var(--sans); font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+  .auth-form input::placeholder { color: var(--text-muted); }
+  .auth-form input:focus { border-color: var(--gold-border); }
+  .btn-auth { background: var(--gold); color: var(--white); border: none; border-radius: 50px; padding: 14px; font-family: var(--sans); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s; margin-top: 4px; box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
+  .btn-auth:hover { background: var(--blue-mid); transform: translateY(-1px); }
+  .auth-note { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 16px; }
+  .auth-note a { color: var(--gold); text-decoration: none; }
+  .error-msg { background: rgba(220,50,50,0.1); border: 1px solid rgba(220,50,50,0.3); color: #ff8080; font-size: 0.82rem; padding: 10px 14px; border-radius: 10px; display: none; }
+  .error-msg.show { display: block; }
+
+  /* NAV */
+  .app-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px 5%; background: rgba(15,30,46,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.12); }
+  .app-nav-logo { display: flex; align-items: center; gap: 6px; font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: var(--white); }
+  .app-nav-logo span { color: var(--gold); }
+  .nav-actions { display: flex; align-items: center; gap: 16px; }
+  .nav-icon-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 0.82rem; transition: color 0.2s; display: flex; align-items: center; gap: 6px; font-family: var(--sans); }
+  .nav-icon-btn:hover { color: var(--gold); }
+
+  /* HOME */
+  #screen-home { background: radial-gradient(ellipse at 70% 0%, rgba(201,168,76,0.1) 0%, transparent 55%), var(--blue-dark); padding-top: 80px; align-items: center; }
+  .home-inner { width: 100%; max-width: 560px; padding: 48px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px; }
+  .home-greeting { font-size: 0.85rem; color: var(--text-muted); margin-bottom: -20px; }
+  .home-title { font-family: var(--serif); font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 400; line-height: 1.3; color: var(--white); }
+  .home-title em { font-style: italic; color: var(--gold); }
+  .home-question { font-size: 0.95rem; color: var(--text-muted); margin-top: -16px; }
+  .trilha-btns { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+  .trilha-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s; text-align: left; width: 100%; }
+  .trilha-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--gold-border); transform: translateY(-2px); }
+  .trilha-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .trilha-label { font-family: var(--serif); font-size: 1.1rem; color: var(--white); display: block; }
+  .trilha-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; display: block; }
+
+  /* STEPS */
+  #screen-bless-name, #screen-emotion, #screen-cause { background: var(--blue-dark); padding-top: 80px; align-items: center; }
+  .step-inner { width: 100%; max-width: 520px; padding: 48px 24px; display: flex; flex-direction: column; gap: 28px; }
+  .step-back { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; font-family: var(--sans); transition: color 0.2s; align-self: flex-start; }
+  .step-back:hover { color: var(--gold); }
+  .step-title { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2rem); color: var(--white); line-height: 1.3; }
+  .step-title em { font-style: italic; color: var(--gold); }
+  .step-sub { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-top: -12px; }
+  .step-input { background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); border-radius: 14px; padding: 16px 20px; color: var(--white); font-family: var(--serif); font-size: 1.2rem; outline: none; transition: border-color 0.2s; width: 100%; }
+  .step-input::placeholder { color: var(--text-muted); font-family: var(--sans); font-size: 0.9rem; }
+  .step-input:focus { border-color: var(--gold-border); }
+  .btn-next { background: var(--gold); color: var(--white); border: none; border-radius: 50px; padding: 16px 36px; font-family: var(--sans); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s; box-shadow: 0 6px 20px rgba(201,168,76,0.3); align-self: flex-start; }
+  .btn-next:hover { background: var(--blue-mid); transform: translateY(-1px); }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* EMOTION */
+  .emotion-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; }
+  .emotion-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .emotion-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--gold-border); transform: translateY(-2px); }
+  .emotion-btn.selected { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+  .emotion-icon { font-size: 1.8rem; }
+  .emotion-label { font-family: var(--serif); font-size: 1rem; color: var(--white); }
+
+  /* CAUSE */
+  .cause-list { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .cause-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all 0.2s; text-align: left; width: 100%; }
+  .cause-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--gold-border); }
+  .cause-btn.selected { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+  .cause-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .cause-label { font-family: var(--serif); font-size: 1rem; color: var(--white); }
+
+  /* LOADING */
+  #screen-loading { background: radial-gradient(ellipse at 50% 30%, rgba(201,168,76,0.1) 0%, transparent 60%), var(--blue-dark); align-items: center; justify-content: center; padding: 40px 24px; }
+  .loading-inner { text-align: center; max-width: 400px; }
+  .loading-wheat { width: 64px; height: 64px; margin: 0 auto 32px; animation: sway 2s ease-in-out infinite; }
+  @keyframes sway { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+  .loading-title { font-family: var(--serif); font-size: 1.5rem; color: var(--white); font-style: italic; margin-bottom: 12px; line-height: 1.4; }
+  .loading-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 40px; }
+  .loading-bar { width: 100%; height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .loading-bar-fill { height: 100%; background: var(--gold); border-radius: 2px; animation: loadfill 6s ease-in-out forwards; }
+  @keyframes loadfill { from { width: 0%; } to { width: 95%; } }
+  .loading-dots { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+  .loading-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: dotpulse 1.4s ease-in-out infinite; }
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotpulse { 0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+
+  /* DEVOTIONAL */
+  #screen-devotional { background: var(--blue-dark); padding-top: 80px; align-items: center; }
+  .devo-inner { width: 100%; max-width: 680px; padding: 40px 24px 80px; }
+  .devo-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+  .devo-date { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .devo-emotion-tag { background: rgba(201,168,76,0.12); border: 1px solid var(--gold-border); color: var(--gold-light); font-size: 0.75rem; padding: 4px 12px; border-radius: 50px; }
+  .devo-content { background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 20px; padding: 40px 36px; }
+  .devo-greeting { font-family: var(--serif); font-size: 1.05rem; color: var(--gold-light); font-style: italic; margin-bottom: 24px; }
+  .devo-text { font-size: 0.97rem; line-height: 1.85; color: rgba(255,255,255,0.82); }
+  .devo-text p { margin-bottom: 18px; }
+  .devo-verse { background: rgba(201,168,76,0.08); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 28px 0; }
+  .devo-verse-text { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--gold-light); line-height: 1.6; margin-bottom: 8px; }
+  .devo-verse-ref { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.06em; }
+  .devo-prayer { background: rgba(28,53,87,0.5); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px; margin-top: 28px; }
+  .devo-prayer-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 14px; font-weight: 500; }
+  .devo-prayer-text { font-family: var(--serif); font-size: 0.97rem; font-style: italic; color: rgba(255,255,255,0.75); line-height: 1.7; }
+  .devo-actions { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .devo-action-btn { display: flex; align-items: center; gap: 8px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 50px; padding: 11px 20px; font-family: var(--sans); font-size: 0.82rem; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+  .devo-action-btn:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+  .devo-action-btn.whatsapp { background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.3); color: #25D366; }
+  .devo-action-btn.whatsapp:hover { background: rgba(37,211,102,0.2); }
+
+  /* HISTORY */
+  #screen-history { background: var(--blue-dark); padding-top: 80px; align-items: center; }
+  .history-inner { width: 100%; max-width: 680px; padding: 40px 24px; }
+  .history-title { font-family: var(--serif); font-size: 1.8rem; color: var(--white); margin-bottom: 8px; }
+  .history-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 32px; }
+  .history-list { display: flex; flex-direction: column; gap: 12px; }
+  .history-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s; }
+  .history-item:hover { background: rgba(255,255,255,0.08); border-color: var(--gold-border); }
+  .history-item-left { display: flex; align-items: center; gap: 14px; }
+  .history-item-date { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .history-item-emotion { font-family: var(--serif); font-size: 1rem; color: var(--white); margin-top: 2px; }
+  .history-item-arrow { color: var(--text-muted); font-size: 0.8rem; }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--blue-mid); border: 1px solid var(--gold-border); color: var(--white); font-size: 0.85rem; padding: 12px 24px; border-radius: 50px; z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 480px) {
+    .auth-box { padding: 32px 24px; }
+    .devo-content { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="screen-auth" class="screen active">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+        <line x1="20" y1="38" x2="20" y2="8" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+        <ellipse cx="20" cy="7" rx="3.5" ry="5.5" fill="#C9A84C" opacity="0.9"/>
+        <ellipse cx="14.5" cy="13" rx="3" ry="5" fill="#C9A84C" opacity="0.75" transform="rotate(-28 14.5 13)"/>
+        <ellipse cx="12" cy="21" rx="2.8" ry="4.5" fill="#C9A84C" opacity="0.6" transform="rotate(-22 12 21)"/>
+        <ellipse cx="25.5" cy="13" rx="3" ry="5" fill="#C9A84C" opacity="0.75" transform="rotate(28 25.5 13)"/>
+        <ellipse cx="28" cy="21" rx="2.8" ry="4.5" fill="#C9A84C" opacity="0.6" transform="rotate(22 28 21)"/>
+        <path d="M20 28 Q13 24 11 17" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+        <path d="M20 28 Q27 24 29 17" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      <span class="auth-logo-text">Mann<span>a</span></span>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Entrar</button>
+      <button class="auth-tab" onclick="switchAuthTab('register')">Criar conta</button>
+    </div>
+    <div id="auth-login">
+      <div class="auth-form">
+        <input type="email" id="login-email" placeholder="Seu e-mail" autocomplete="email">
+        <input type="password" id="login-password" placeholder="Sua senha" autocomplete="current-password">
+        <div class="error-msg" id="login-error"></div>
+        <button class="btn-auth" onclick="handleLogin()">Entrar</button>
+      </div>
+    </div>
+    <div id="auth-register" style="display:none">
+      <div class="auth-form">
+        <input type="text" id="register-name" placeholder="Seu nome" autocomplete="name">
+        <input type="email" id="register-email" placeholder="Seu e-mail" autocomplete="email">
+        <input type="password" id="register-password" placeholder="Crie uma senha" autocomplete="new-password">
+        <div class="error-msg" id="register-error"></div>
+        <button class="btn-auth" onclick="handleRegister()">Criar conta</button>
+      </div>
+    </div>
+    <p class="auth-note">Ao continuar, voce concorda com os <a href="#">Termos de Uso</a></p>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="app-nav" id="app-nav" style="display:none">
+  <div class="app-nav-logo">
+    <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
+      <line x1="20" y1="38" x2="20" y2="8" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+      <ellipse cx="20" cy="7" rx="3.5" ry="5.5" fill="#C9A84C" opacity="0.9"/>
+      <ellipse cx="14.5" cy="13" rx="3" ry="5" fill="#C9A84C" opacity="0.75" transform="rotate(-28 14.5 13)"/>
+      <ellipse cx="12" cy="21" rx="2.8" ry="4.5" fill="#C9A84C" opacity="0.6" transform="rotate(-22 12 21)"/>
+      <ellipse cx="25.5" cy="13" rx="3" ry="5" fill="#C9A84C" opacity="0.75" transform="rotate(28 25.5 13)"/>
+      <ellipse cx="28" cy="21" rx="2.8" ry="4.5" fill="#C9A84C" opacity="0.6" transform="rotate(22 28 21)"/>
+      <path d="M20 28 Q13 24 11 17" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+      <path d="M20 28 Q27 24 29 17" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+    Mann<span>a</span>
+  </div>
+  <div class="nav-actions">
+    <button class="nav-icon-btn" onclick="showScreen('history')">Historico</button>
+    <button class="nav-icon-btn" onclick="handleLogout()">Sair</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="screen-home" class="screen">
+  <div class="home-inner">
+    <p class="home-greeting" id="home-greeting">Bom dia</p>
+    <h1 class="home-title">Ola, <em id="home-name">amigo</em>.<br>Descubra agora a palavra certa<br>para o que voce esta vivendo hoje.</h1>
+    <p class="home-question">Para quem voce deseja a palavra neste momento?</p>
+    <div class="trilha-btns">
+      <button class="trilha-btn" onclick="selectTrilha('eu')">
+        <span class="trilha-icon">+</span>
+        <div>
+          <span class="trilha-label">Para mim</span>
+          <span class="trilha-sub">Receba um devocional para o seu momento</span>
+        </div>
+      </button>
+      <button class="trilha-btn" onclick="selectTrilha('outro')">
+        <span class="trilha-icon">&#9825;</span>
+        <div>
+          <span class="trilha-label">Para alguem que desejo abencoar</span>
+          <span class="trilha-sub">Gere um devocional personalizado para enviar</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- BLESS NAME -->
+<div id="screen-bless-name" class="screen">
+  <div class="step-inner">
+    <button class="step-back" onclick="showScreen('home')">&larr; Voltar</button>
+    <h2 class="step-title">Ok. Qual o nome de quem<br>sera <em>abencoado</em>?</h2>
+    <input class="step-input" type="text" id="bless-name-input" placeholder="Nome da pessoa..." oninput="checkBlessName()">
+    <button class="btn-next" id="btn-bless-next" disabled onclick="goToEmotionBless()">Continuar &rarr;</button>
+  </div>
+</div>
+
+<!-- EMOTION -->
+<div id="screen-emotion" class="screen">
+  <div class="step-inner">
+    <button class="step-back" id="emotion-back" onclick="goBackFromEmotion()">&larr; Voltar</button>
+    <h2 class="step-title" id="emotion-title">Ok. Como voce esta<br>se sentindo <em>hoje</em>?</h2>
+    <p class="step-sub">Nao existe resposta certa. Apenas seja sincero.</p>
+    <div class="emotion-grid">
+      <button class="emotion-btn" onclick="selectEmotion('Triste', true)"><span class="emotion-icon">:(</span><span class="emotion-label">Triste</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Ansioso(a)', true)"><span class="emotion-icon">&gt;_&lt;</span><span class="emotion-label">Ansioso(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Desanimado(a)', true)"><span class="emotion-icon">:-/</span><span class="emotion-label">Desanimado(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Confuso(a)', true)"><span class="emotion-icon">?</span><span class="emotion-label">Confuso(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Com medo', true)"><span class="emotion-icon">!</span><span class="emotion-label">Com medo</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Sobrecarregado(a)', true)"><span class="emotion-icon">~_~</span><span class="emotion-label">Sobrecarregado(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Feliz', false)"><span class="emotion-icon">:)</span><span class="emotion-label">Feliz</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Grato(a)', false)"><span class="emotion-icon">&#9825;</span><span class="emotion-label">Grato(a)</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Em paz', false)"><span class="emotion-icon">~</span><span class="emotion-label">Em paz</span></button>
+      <button class="emotion-btn" onclick="selectEmotion('Neutro(a)', false)"><span class="emotion-icon">-</span><span class="emotion-label">Neutro(a)</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- CAUSE -->
+<div id="screen-cause" class="screen">
+  <div class="step-inner">
+    <button class="step-back" onclick="showScreen('emotion')">&larr; Voltar</button>
+    <h2 class="step-title" id="cause-title">O que vem deixando<br>voce <em>assim</em>?</h2>
+    <div class="cause-list">
+      <button class="cause-btn" onclick="selectCause('Trabalho e Financas')"><span class="cause-icon">$</span><span class="cause-label">Trabalho / Financas</span></button>
+      <button class="cause-btn" onclick="selectCause('Familia')"><span class="cause-icon">&#9825;</span><span class="cause-label">Familia</span></button>
+      <button class="cause-btn" onclick="selectCause('Saude')"><span class="cause-icon">+</span><span class="cause-label">Saude</span></button>
+      <button class="cause-btn" onclick="selectCause('Uma decisao importante')"><span class="cause-icon">?</span><span class="cause-label">Decisao importante</span></button>
+      <button class="cause-btn" onclick="selectCause('O futuro')"><span class="cause-icon">&gt;</span><span class="cause-label">Futuro</span></button>
+      <button class="cause-btn" onclick="selectCause('Algo que nao consigo explicar')"><span class="cause-icon">...</span><span class="cause-label">Algo que nao consigo explicar</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="screen-loading" class="screen">
+  <div class="loading-inner">
+    <svg class="loading-wheat" viewBox="0 0 40 40" fill="none">
+      <line x1="20" y1="38" x2="20" y2="8" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+      <ellipse cx="20" cy="7" rx="3.5" ry="5.5" fill="#C9A84C" opacity="0.9"/>
+      <ellipse cx="14.5" cy="13" rx="3" ry="5" fill="#C9A84C" opacity="0.75" transform="rotate(-28 14.5 13)"/>
+      <ellipse cx="12" cy="21" rx="2.8" ry="4.5" fill="#C9A84C" opacity="0.6" transform="rotate(-22 12 21)"/>
+      <ellipse cx="25.5" cy="13" rx="3" ry="5" fill="#C9A84C" opacity="0.75" transform="rotate(28 25.5 13)"/>
+      <ellipse cx="28" cy="21" rx="2.8" ry="4.5" fill="#C9A84C" opacity="0.6" transform="rotate(22 28 21)"/>
+      <path d="M20 28 Q13 24 11 17" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+      <path d="M20 28 Q27 24 29 17" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+    <p class="loading-title" id="loading-title">Estamos preparando uma palavra personalizada para o seu momento...</p>
+    <p class="loading-sub">Isso pode levar alguns segundos</p>
+    <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+    <div class="loading-dots">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DEVOTIONAL -->
+<div id="screen-devotional" class="screen">
+  <div class="devo-inner">
+    <div class="devo-meta">
+      <span class="devo-date" id="devo-date"></span>
+      <span class="devo-emotion-tag" id="devo-emotion-tag"></span>
+    </div>
+    <div class="devo-content" id="devo-content"></div>
+    <div class="devo-actions" id="devo-actions">
+      <button class="devo-action-btn" onclick="generatePDF()">Baixar PDF</button>
+      <button class="devo-action-btn whatsapp" id="btn-whatsapp" style="display:none" onclick="shareWhatsApp()">Enviar pelo WhatsApp</button>
+      <button class="devo-action-btn" onclick="showScreen('home')">Nova palavra</button>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="screen-history" class="screen">
+  <div class="history-inner">
+    <button class="step-back" onclick="showScreen('home')" style="margin-bottom:16px">&larr; Voltar</button>
+    <h2 class="history-title">Meu Historico</h2>
+    <p class="history-sub">Suas palavras anteriores, sempre disponiveis.</p>
+    <div class="history-list" id="history-list"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const state = {
+  user: null, trilha: null, blessName: null,
+  emotion: null, emotionNegative: false, cause: null,
+  currentDevo: null, history: []
+};
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  document.getElementById('app-nav').style.display = id !== 'auth' ? 'flex' : 'none';
+  window.scrollTo(0, 0);
+}
+
+function showToast(msg, duration) {
+  duration = duration || 2500;
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, duration);
+}
+
+function capitalize(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+function getGreeting() {
+  var h = new Date().getHours();
+  if (h < 12) return 'Bom dia';
+  if (h < 18) return 'Boa tarde';
+  return 'Boa noite';
+}
+
+function formatDate(d) {
+  d = d || new Date();
+  return d.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function saveHistory() {
+  localStorage.setItem('manna_history_' + state.user.email, JSON.stringify(state.history));
+}
+
+function loadHistory() {
+  var raw = localStorage.getItem('manna_history_' + state.user.email);
+  state.history = raw ? JSON.parse(raw) : [];
+}
+
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(function(t){ t.classList.remove('active'); });
+  event.target.classList.add('active');
+  document.getElementById('auth-login').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none';
+}
+
+function handleLogin() {
+  var email = document.getElementById('login-email').value.trim();
+  var password = document.getElementById('login-password').value;
+  var err = document.getElementById('login-error');
+  if (!email || !password) { err.textContent = 'Preencha e-mail e senha.'; err.classList.add('show'); return; }
+  // CONECTAR SUPABASE AQUI
+  var users = JSON.parse(localStorage.getItem('manna_users') || '{}');
+  if (!users[email]) { err.textContent = 'Usuario nao encontrado. Crie uma conta.'; err.classList.add('show'); return; }
+  if (users[email].password !== password) { err.textContent = 'Senha incorreta.'; err.classList.add('show'); return; }
+  err.classList.remove('show');
+  loginUser(users[email]);
+}
+
+function handleRegister() {
+  var name = document.getElementById('register-name').value.trim();
+  var email = document.getElementById('register-email').value.trim();
+  var password = document.getElementById('register-password').value;
+  var err = document.getElementById('register-error');
+  if (!name || !email || !password) { err.textContent = 'Preencha todos os campos.'; err.classList.add('show'); return; }
+  if (password.length < 6) { err.textContent = 'A senha precisa ter ao menos 6 caracteres.'; err.classList.add('show'); return; }
+  // CONECTAR SUPABASE AQUI
+  var users = JSON.parse(localStorage.getItem('manna_users') || '{}');
+  if (users[email]) { err.textContent = 'Este e-mail ja esta cadastrado.'; err.classList.add('show'); return; }
+  users[email] = { name: name, email: email, password: password };
+  localStorage.setItem('manna_users', JSON.stringify(users));
+  err.classList.remove('show');
+  loginUser({ name: name, email: email });
+}
+
+function loginUser(user) {
+  state.user = user;
+  localStorage.setItem('manna_current_user', JSON.stringify(user));
+  loadHistory();
+  goToHome();
+}
+
+function handleLogout() {
+  state.user = null;
+  localStorage.removeItem('manna_current_user');
+  showScreen('auth');
+}
+
+function goToHome() {
+  document.getElementById('home-greeting').textContent = getGreeting();
+  document.getElementById('home-name').textContent = capitalize(state.user.name.split(' ')[0]);
+  showScreen('home');
+}
+
+function selectTrilha(trilha) {
+  state.trilha = trilha; state.blessName = null; state.emotion = null; state.cause = null;
+  if (trilha === 'outro') { showScreen('bless-name'); }
+  else { document.getElementById('emotion-title').innerHTML = 'Ok. Como voce esta<br>se sentindo <em>hoje</em>?'; showScreen('emotion'); }
+}
+
+function checkBlessName() {
+  var val = document.getElementById('bless-name-input').value.trim();
+  document.getElementById('btn-bless-next').disabled = val.length < 2;
+}
+
+function goToEmotionBless() {
+  var name = document.getElementById('bless-name-input').value.trim();
+  state.blessName = name;
+  var firstName = capitalize(name.split(' ')[0]);
+  document.getElementById('emotion-title').innerHTML = 'Como voce acredita que <em>' + firstName + '</em><br>esteja se sentindo neste momento?';
+  showScreen('emotion');
+}
+
+function goBackFromEmotion() {
+  if (state.trilha === 'outro') showScreen('bless-name');
+  else showScreen('home');
+}
+
+function selectEmotion(emotion, isNegative) {
+  state.emotion = emotion; state.emotionNegative = isNegative; state.cause = null;
+  if (isNegative) {
+    var firstName = state.trilha === 'outro' ? capitalize(state.blessName.split(' ')[0]) : null;
+    var title = document.getElementById('cause-title');
+    title.innerHTML = firstName
+      ? 'O que parece deixar<br><em>' + firstName + '</em> assim?'
+      : 'O que vem deixando<br>voce <em>assim</em>?';
+    showScreen('cause');
+  } else { generateDevocional(); }
+}
+
+function selectCause(cause) { state.cause = cause; generateDevocional(); }
+
+async function generateDevocional() {
+  var firstName = state.trilha === 'outro'
+    ? capitalize(state.blessName.split(' ')[0])
+    : capitalize(state.user.name.split(' ')[0]);
+  var lt = document.getElementById('loading-title');
+  lt.textContent = state.trilha === 'outro'
+    ? 'Estamos preparando uma palavra personalizada para o momento vivido por ' + firstName + '...'
+    : 'Estamos preparando uma palavra personalizada para o seu momento...';
+  showScreen('loading');
+  var bar = document.querySelector('.loading-bar-fill');
+  bar.style.animation = 'none'; bar.offsetHeight; bar.style.animation = 'loadfill 6s ease-in-out forwards';
+  var prompt = buildPrompt(firstName);
+  try {
+    var response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1500, messages: [{ role: 'user', content: prompt }] })
+    });
+    var data = await response.json();
+    var text = data.content && data.content[0] ? data.content[0].text : '';
+    renderDevocional(firstName, text);
+  } catch(err) { renderDevocional(firstName, getDemoDevocional(firstName)); }
+}
+
+function buildPrompt(firstName) {
+  var isNeutral = state.emotion === 'Neutro(a)';
+  var prompt = 'Voce e um escritor cristao especialista em devocionais, com profundo conhecimento biblico e sensibilidade pastoral. Seu estilo e acolhedor, vulneravel, real e esperancoso, semelhante aos devocionais de maior sucesso do mercado brasileiro, como os de Deive Leonardo e Cafe com Deus Pai. Voce escreve para o coracao das pessoas, nao apenas para a mente.\n\nGere um devocional personalizado para ' + firstName;
+  if (isNeutral) { prompt += ', que esta se sentindo neutro hoje. Gere um devocional motivacional, esperancoso e que provoque boas emocoes.'; }
+  else if (state.cause) { prompt += ', que esta se sentindo ' + state.emotion + ' por causa de: ' + state.cause + '.'; }
+  else { prompt += ', que esta se sentindo ' + state.emotion + '.'; }
+  prompt += '\n\nEstrutura obrigatoria:\nABERTURA: abertura empatica\nVERSICULO: versiculo biblico adequado\nREFERENCIA: referencia do versiculo\nREFLEXAO: reflexao com 4 paragrafos\nORACAO: oracao em primeira pessoa\n\nComece EXATAMENTE com: ' + firstName + ', esta e a palavra de Deus para voce hoje.\nTom: caloroso, pastoral, intimo, vulneravel.\nExtensao: entre 500 e 700 palavras.';
+  return prompt;
+}
+
+function getDemoDevocional(firstName) {
+  return firstName + ', esta e a palavra de Deus para voce hoje.\n\nABERTURA: Carregar o peso das financas e uma das coisas mais exaustivas que existem. Nao e frescura, nao e falta de fe, e real. Se voce esta ansioso hoje, saiba que Deus ve esse peso. E Ele nao esta distante.\n\nVERSICULO: Nao andem ansiosos por coisa alguma, mas em tudo, pela oracao e pela suplica, com acao de gracas, apresentem seus pedidos a Deus. E a paz de Deus, que excede todo o entendimento, guardara os seus coracoes e as suas mentes em Cristo Jesus.\n\nREFERENCIA: Filipenses 4:6-7\n\nREFLEXAO: A palavra de Paulo nao foi escrita de um lugar confortavel. Ele estava preso quando escreveu isso. Sem dinheiro, sem liberdade, sem garantias humanas. E ainda assim ele fala em paz.\n\n' + firstName + ', a ansiedade financeira muitas vezes nos faz viver no futuro. Deus, porem, nos chama de volta para o presente. Para o hoje.\n\nIsso nao significa ignorar os problemas praticos. Significa enfrenta-los com uma ancora diferente. Quando a ansiedade gritar mais alto, leve esse grito para a oracao.\n\nHa algo que Deus quer que voce saiba hoje: Ele viu cada noite que voce dormiu mal pensando nisso. Ele nao estava distante. Ele estava ali. E continua.\n\nORACAO: Senhor, hoje meu coracao esta pesado. Confesso que as vezes o medo fala mais alto que a fe. Peco sabedoria para administrar o que tenho, coragem para agir onde preciso agir e descanso para o que esta fora do meu controle. Guarda meu coracao. Em nome de Jesus, amen.';
+}
+
+function extractSection(text, label) {
+  var regex = new RegExp(label + ':\\s*([\\s\\S]*?)(?=\\n[A-Z]+:|$)', 'i');
+  var match = text.match(regex);
+  return match ? match[1].trim() : null;
+}
+
+function renderDevocional(firstName, rawText) {
+  var abertura = extractSection(rawText, 'ABERTURA');
+  var versiculo = extractSection(rawText, 'VERSICULO') || extractSection(rawText, 'VERS.CULO');
+  var referencia = extractSection(rawText, 'REFERENCIA') || extractSection(rawText, 'REFER.NCIA');
+  var reflexao = extractSection(rawText, 'REFLEXAO') || extractSection(rawText, 'REFLEX.O');
+  var oracao = extractSection(rawText, 'ORACAO') || extractSection(rawText, 'ORA.AO');
+
+  document.getElementById('devo-date').textContent = formatDate();
+  document.getElementById('devo-emotion-tag').textContent = (state.emotion || '') + (state.cause ? ' - ' + state.cause : '');
+
+  var html = '<p class="devo-greeting">' + firstName + ', esta e a palavra de Deus para voce hoje.</p>';
+  if (abertura) html += '<div class="devo-text"><p>' + abertura.replace(/\n\n/g, '</p><p>') + '</p></div>';
+  if (versiculo) html += '<div class="devo-verse"><p class="devo-verse-text">"' + versiculo + '"</p>' + (referencia ? '<p class="devo-verse-ref">' + referencia + '</p>' : '') + '</div>';
+  if (reflexao) html += '<div class="devo-text">' + reflexao.split(/\n\n+/).map(function(p){ return '<p>' + p.trim() + '</p>'; }).join('') + '</div>';
+  if (oracao) html += '<div class="devo-prayer"><p class="devo-prayer-label">Oracao</p><p class="devo-prayer-text">' + oracao + '</p></div>';
+  if (!abertura && !versiculo) html += '<div class="devo-text"><p>' + rawText.replace(/\n\n/g, '</p><p>') + '</p></div>';
+
+  document.getElementById('devo-content').innerHTML = html;
+  document.getElementById('btn-whatsapp').style.display = state.trilha === 'outro' ? 'flex' : 'none';
+
+  if (state.trilha === 'eu') {
+    var entry = { id: Date.now(), date: new Date().toISOString(), emotion: state.emotion, cause: state.cause, content: rawText };
+    state.currentDevo = entry;
+    state.history.unshift(entry);
+    saveHistory();
+    // CONECTAR SUPABASE AQUI
+  }
+  showScreen('devotional');
+}
+
+function renderHistory() {
+  var list = document.getElementById('history-list');
+  if (!state.history.length) {
+    list.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;text-align:center;padding:40px 0">Voce ainda nao tem devocionais salvos.</p>';
+    return;
+  }
+  list.innerHTML = state.history.map(function(entry) {
+    var d = new Date(entry.date);
+    var dateStr = d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+    return '<div class="history-item" onclick="openHistoryEntry(' + entry.id + ')"><div class="history-item-left"><div><div class="history-item-date">' + dateStr + '</div><div class="history-item-emotion">' + entry.emotion + (entry.cause ? ' - ' + entry.cause : '') + '</div></div></div><span class="history-item-arrow">&rarr;</span></div>';
+  }).join('');
+}
+
+function openHistoryEntry(id) {
+  var entry = state.history.find(function(e){ return e.id === id; });
+  if (!entry) return;
+  state.emotion = entry.emotion; state.cause = entry.cause; state.trilha = 'eu';
+  var firstName = capitalize(state.user.name.split(' ')[0]);
+  document.getElementById('devo-date').textContent = formatDate(new Date(entry.date));
+  document.getElementById('devo-emotion-tag').textContent = (entry.emotion || '') + (entry.cause ? ' - ' + entry.cause : '');
+  var abertura = extractSection(entry.content, 'ABERTURA');
+  var versiculo = extractSection(entry.content, 'VERSICULO') || extractSection(entry.content, 'VERS.CULO');
+  var referencia = extractSection(entry.content, 'REFERENCIA') || extractSection(entry.content, 'REFER.NCIA');
+  var reflexao = extractSection(entry.content, 'REFLEXAO') || extractSection(entry.content, 'REFLEX.O');
+  var oracao = extractSection(entry.content, 'ORACAO') || extractSection(entry.content, 'ORA.AO');
+  var html = '<p class="devo-greeting">' + firstName + ', esta e a palavra de Deus para voce hoje.</p>';
+  if (abertura) html += '<div class="devo-text"><p>' + abertura.replace(/\n\n/g, '</p><p>') + '</p></div>';
+  if (versiculo) html += '<div class="devo-verse"><p class="devo-verse-text">"' + versiculo + '"</p>' + (referencia ? '<p class="devo-verse-ref">' + referencia + '</p>' : '') + '</div>';
+  if (reflexao) html += '<div class="devo-text">' + reflexao.split(/\n\n+/).map(function(p){ return '<p>' + p.trim() + '</p>'; }).join('') + '</div>';
+  if (oracao) html += '<div class="devo-prayer"><p class="devo-prayer-label">Oracao</p><p class="devo-prayer-text">' + oracao + '</p></div>';
+  document.getElementById('devo-content').innerHTML = html;
+  document.getElementById('btn-whatsapp').style.display = 'none';
+  showScreen('devotional');
+}
+
+function generatePDF() { showToast('Gerando PDF... (integracao em breve)'); }
+
+function shareWhatsApp() {
+  var firstName = state.blessName ? capitalize(state.blessName.split(' ')[0]) : '';
+  var msg = encodeURIComponent('Ola! Preparei um devocional especialmente para voce, ' + firstName + '. Que Deus abencoe o seu dia!\n\n[link do devocional]');
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+
+function init() {
+  var saved = localStorage.getItem('manna_current_user');
+  if (saved) { state.user = JSON.parse(saved); loadHistory(); goToHome(); }
+  var histObs = new MutationObserver(function() {
+    if (document.getElementById('screen-history').classList.contains('active')) renderHistory();
+  });
+  histObs.observe(document.getElementById('screen-history'), { attributeFilter: ['class'] });
+}
+
+init();
+</script>
+</body>
+</html>
