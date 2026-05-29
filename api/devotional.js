@@ -5,65 +5,101 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'Method not allowed' }); return; }
 
-  const { prompt } = req.body;
-  if (!prompt) { res.status(400).json({ error: 'Prompt required' }); return; }
+  const { firstName, emotion, cause, trilha, blessName } = req.body;
+  if (!firstName || !emotion) { res.status(400).json({ error: 'Missing required fields' }); return; }
 
-  function isComplete(text) {
-    if (!text) return false;
-    const wordCount = text.split(/\s+/).length;
-    const hasAbertura = /ABERTURA:/i.test(text);
-    const hasVersiculo = /VERS[IÍ]CULO:/i.test(text);
-    const hasReflexao = /REFLEX[AÃ]O:/i.test(text);
-    const hasOracao = /ORA[CÇ][AÃ]O:/i.test(text);
-    return wordCount >= 550 && hasAbertura && hasVersiculo && hasReflexao && hasOracao;
+  const MODEL = 'claude-sonnet-4-6';
+  const isNeutral = emotion === 'Neutro(a)';
+  const isBless = trilha === 'outro';
+  const targetName = isBless ? blessName : firstName;
+  const causeText = cause ? ` por causa de ${cause}` : '';
+  const emotionContext = isNeutral
+    ? `que está se sentindo neutro hoje`
+    : `que está se sentindo ${emotion}${causeText}`;
+
+  async function callClaude(prompt) {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || 'API error');
+    return data.content[0].text.trim();
   }
 
-  const strongPrompt = prompt + '\n\nATENÇÃO ABSOLUTA: Seu texto DEVE ter no mínimo 700 palavras. DEVE conter obrigatoriamente as seções ABERTURA:, VERSÍCULO:, REFERÊNCIA:, REFLEXÃO: e ORAÇÃO:. NÃO encurte o texto. NÃO pule nenhuma seção. Um devocional incompleto é inaceitável.';
+  try {
+    // === CALL 1: ABERTURA ===
+    const abertura = await callClaude(
+      `Você é um escritor cristão no estilo de Deive Leonardo. Escreva APENAS a abertura de um devocional para ${targetName}, ${emotionContext}. 
+      
+      A abertura deve ter exatamente 5 linhas. Deve ser empática, acolhedora, vulnerável e fazer ${targetName} sentir-se completamente compreendido(a). Fale diretamente com ${targetName} sobre o que ele/ela está sentindo. Seja específico sobre a dor ou alegria.
+      
+      Comece com: "${targetName}, esta é a palavra de Deus para você hoje."
+      
+      Escreva APENAS o texto da abertura, sem títulos ou marcações.`
+    );
 
-  // Try sonnet first (more instruction-following), fallback to opus
-  const models = ['claude-sonnet-4-6', 'claude-opus-4-8'];
+    // === CALL 2: VERSÍCULO ===
+    const versiculoRaw = await callClaude(
+      `Indique o versículo bíblico mais adequado para alguém que está ${emotionContext}. 
+      
+      Responda EXATAMENTE neste formato:
+      TEXTO: [versículo completo aqui]
+      REFERENCIA: [ex: João 3:16]
+      
+      O versículo deve ser completo, longo e profundamente adequado ao momento emocional. Use português brasileiro.`
+    );
 
-  for (const model of models) {
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      try {
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': process.env.ANTHROPIC_API_KEY,
-            'anthropic-version': '2023-06-01'
-          },
-          body: JSON.stringify({
-            model: model,
-            max_tokens: 4000,
-            messages: [{ role: 'user', content: strongPrompt }]
-          })
-        });
+    const versiculoMatch = versiculoRaw.match(/TEXTO:\s*([\s\S]*?)\nREFERENCIA:\s*(.+)/i);
+    const versiculo = versiculoMatch ? versiculoMatch[1].trim() : versiculoRaw;
+    const referencia = versiculoMatch ? versiculoMatch[2].trim() : '';
 
-        const data = await response.json();
+    // === CALL 3: REFLEXÃO ===
+    const reflexao = await callClaude(
+      `Você é um escritor cristão no estilo de Deive Leonardo. Escreva APENAS a reflexão de um devocional para ${targetName}, ${emotionContext}, baseada no versículo: "${versiculo}" (${referencia}).
 
-        if (!response.ok) {
-          console.log(`Model ${model} not available, trying next...`);
-          break; // try next model
-        }
+      Escreva EXATAMENTE 4 parágrafos separados por linha em branco. Cada parágrafo deve ter no mínimo 5 linhas.
+      
+      Parágrafo 1: Contexto histórico/bíblico do versículo de forma profunda e interessante
+      Parágrafo 2: Conexão direta com a realidade emocional de ${targetName} hoje
+      Parágrafo 3: Um insight transformador e prático para ${targetName}
+      Parágrafo 4: Encorajamento final profundo e esperançoso
+      
+      Escreva APENAS os 4 parágrafos, sem títulos ou marcações. Português brasileiro correto.`
+    );
 
-        const text = data.content[0].text;
-        const wordCount = text.split(/\s+/).length;
-        console.log(`Model ${model}, attempt ${attempt}: ${wordCount} words`);
+    // === CALL 4: ORAÇÃO ===
+    const oracao = await callClaude(
+      `Você é um escritor cristão no estilo de Deive Leonardo. Escreva APENAS a oração final de um devocional para ${targetName}, ${emotionContext}.
+      
+      A oração deve:
+      - Estar em primeira pessoa (como se ${targetName} estivesse orando)
+      - Ter exatamente 6 linhas
+      - Ser vulnerável, sincera e específica para o momento emocional
+      - Terminar com "Amém."
+      
+      Escreva APENAS o texto da oração, sem títulos ou marcações. Português brasileiro correto.`
+    );
 
-        if (isComplete(text)) {
-          res.status(200).json({ text, model, attempts: attempt });
-          return;
-        }
+    res.status(200).json({
+      abertura,
+      versiculo,
+      referencia,
+      reflexao,
+      oracao
+    });
 
-        console.log(`Incomplete, retrying...`);
-
-      } catch (error) {
-        console.error(`Error with ${model}:`, error.message);
-        break;
-      }
-    }
+  } catch (error) {
+    console.error('Error generating devotional:', error.message);
+    res.status(500).json({ error: error.message });
   }
-
-  res.status(500).json({ error: 'Could not generate complete devotional' });
 }
