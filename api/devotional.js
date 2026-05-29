@@ -17,17 +17,24 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-3-5-sonnet-20241022',
         max_tokens: 3000,
         messages: [{ role: 'user', content: prompt }]
       })
     });
 
     const data = await response.json();
-    if (!response.ok) { res.status(500).json({ error: data.error?.message || 'API error' }); return; }
+    
+    if (!response.ok) {
+      console.error('Anthropic API error:', JSON.stringify(data));
+      res.status(500).json({ error: data.error?.message || 'API error', details: data });
+      return;
+    }
+    
     res.status(200).json({ text: data.content[0].text });
 
   } catch (error) {
+    console.error('Function error:', error.message);
     res.status(500).json({ error: error.message });
   }
 }
