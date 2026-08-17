@@ -17,8 +17,6 @@ export default async function handler(req, res) {
   }
 
   const email = data?.customer?.email
-  const subscription_id = data?.subscription_id || null
-  const interval = data?.interval || 'courtesy'
 
   if (!email) {
     return res.status(400).json({ error: 'Email não encontrado no evento' })
@@ -48,13 +46,31 @@ export default async function handler(req, res) {
     return res.status(200).json({ message: 'Evento ignorado: ' + event })
   }
 
+  // Busca o registro atual antes de gravar.
+  // Nem todo evento da Mivvo carrega todos os campos, e o upsert substitui a
+  // linha inteira — sem esta consulta, um evento incompleto apaga dado bom.
+  const { data: existing } = await supabase
+    .from('subscriptions')
+    .select('plan, mivvo_subscription_id')
+    .eq('email', email)
+    .maybeSingle()
+
+  // 'interval' só existe em subscription.created.
+  // Em sale.paid e subscription.invoice_paid ele não vem, então preservamos o
+  // plano já gravado em vez de assumir cortesia.
+  const plan = data?.interval || existing?.plan || 'courtesy'
+
+  // 'subscription_id' não existe em sale.paid. Mesma lógica de preservação.
+  const subscription_id =
+    data?.subscription_id || existing?.mivvo_subscription_id || null
+
   const { error } = await supabase
     .from('subscriptions')
     .upsert(
       {
         email,
         status: newStatus,
-        plan: interval,
+        plan,
         mivvo_subscription_id: subscription_id,
       },
       { onConflict: 'email' }
